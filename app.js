@@ -50,6 +50,16 @@ function showView(viewId) {
   document.getElementById(`${viewId}-view`).classList.remove('hidden');
   state.currentView = viewId;
   updateNavActive(viewId);
+
+  // Sembunyikan bottom nav saat kuis berjalan agar tidak menghalangi tombol kontrol di HP
+  const bottomNav = document.querySelector('.bottom-nav');
+  if (bottomNav) {
+    if (viewId === 'quiz') {
+      bottomNav.classList.add('hidden');
+    } else {
+      bottomNav.classList.remove('hidden');
+    }
+  }
 }
 
 function updateNavActive(viewId) {
