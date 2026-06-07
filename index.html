@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UseMe – Kuis Sistem Operasi Linux</title>
+  <meta name="description"
+    content="Platform kuis interaktif materi Sistem Operasi Linux: Manajemen Memori, Mass Storage, dan User Management. Soal pilihan ganda dengan pembahasan lengkap." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS & RESET
+    ============================================================ */
+    :root {
+      --primary: #006194;
+      --primary-container: #007bb9;
+      --primary-fixed: #cce5ff;
+      --primary-fixed-dim: #93ccff;
+      --on-primary: #ffffff;
+      --on-primary-fixed: #001d31;
+      --surface: #f7f9ff;
+      --surface-low: #f1f4fa;
+      --surface-container: #ebeef4;
+      --surface-high: #e5e8ee;
+      --surface-highest: #dfe3e8;
+      --surface-white: #ffffff;
+      --on-surface: #181c20;
+      --on-surface-var: #3f4850;
+      --outline: #707881;
+      --outline-var: #bfc7d2;
+      --tertiary: #894d00;
+      --tertiary-fixed: #ffdcc0;
+      --tertiary-fixed-dim: #ffb875;
+      --secondary: #5c5f61;
+      --secondary-fixed: #e0e3e5;
+      --error: #ba1a1a;
+      --error-container: #ffdad6;
+      --on-error: #ffffff;
+      --on-error-container: #93000a;
+
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-primary: 0 8px 30px rgba(2, 132, 199, 0.15);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--surface);
+      color: var(--on-surface);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .app-layout {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+       SIDEBAR (Desktop)
+    ============================================================ */
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--surface-container);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      overflow-y: auto;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-logo {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      padding-left: 8px;
+    }
+
+    .sidebar-logo span {
+      color: var(--tertiary);
+    }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-high);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      margin-bottom: 28px;
+    }
+
+    .sidebar-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-user-info p:first-child {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .sidebar-user-info p:last-child {
+      font-size: 12px;
+      color: var(--on-surface-var);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--on-surface-var);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: var(--surface-high);
+      color: var(--primary);
+      transform: translateX(2px);
+    }
+
+    .nav-item.nav-active {
+      background: var(--primary-fixed);
+      color: var(--primary);
+    }
+
+    .nav-item .material-symbols-outlined {
+      font-size: 22px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    /* ============================================================
+       MAIN CONTENT AREA
+    ============================================================ */
+    .main-area {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================================
+       TOP HEADER (Mobile)
+    ============================================================ */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--surface-white);
+      border-bottom: 1px solid var(--surface-high);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+    }
+
+    .header-logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .header-logo span {
+      color: var(--tertiary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--on-surface-var);
+      transition: background 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--surface-low);
+    }
+
+    .icon-btn .material-symbols-outlined {
+      font-size: 22px;
+    }
+
+    /* ============================================================
+       VIEW CONTAINERS
+    ============================================================ */
+    .view {
+      flex: 1;
+    }
+
+    /* ============================================================
+       DASHBOARD VIEW
+    ============================================================ */
+    .dashboard-content {
+      padding: 32px 24px 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+      border-radius: var(--radius-xl);
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .welcome-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: 80px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+
+    .welcome-text h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .welcome-text p {
+      font-size: 14px;
+      opacity: 0.85;
+      max-width: 360px;
+      line-height: 1.5;
+    }
+
+    .welcome-stats {
+      display: flex;
+      gap: 16px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-stat {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .welcome-stat .stat-val {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .welcome-stat .stat-lbl {
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    /* Module Cards Grid */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .module-card {
+      background: var(--surface-white);
+      border: 1px solid var(--outline-var);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      box-shadow: var(--shadow-primary);
+      transform: translateY(-2px);
+    }
+
+    .module-card-all {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      background: linear-gradient(135deg, #f7f9ff 0%, #ebeef4 100%);
+    }
+
+    .card-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-icon-wrap .material-symbols-outlined {
+      font-size: 28px;
+    }
+
+    .icon-primary {
+      background: var(--primary-fixed);
+      color: var(--primary);
+    }
+
+    .icon-tertiary {
+      background: var(--tertiary-fixed);
+      color: var(--tertiary);
+    }
+
+    .icon-secondary {
+      background: var(--secondary-fixed);
+      color: var(--secondary);
+    }
+
+    .icon-combo {
+      background: linear-gradient(135deg, var(--primary-fixed), var(--tertiary-fixed));
+      color: var(--primary);
+    }
+
+    .card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--on-surface-var);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--on-surface-var);
+      margin-bottom: 10px;
+    }
+
+    .card-meta .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    /* Progress bar in card */
+    .progress-track {
+      height: 8px;
+      background: var(--surface-container);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: var(--radius-full);
+      transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 0%;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--on-surface-var);
+    }
+
+    .best-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--primary-fixed);
+      color: var(--primary);
+      border-radius: var(--radius-full);
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* Start Button */
+    .start-quiz-btn {
+      padding: 11px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-container);
+      box-shadow: var(--shadow-primary);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-fixed);
+    }
+
+    .btn-outline:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       QUIZ VIEW
+    ============================================================ */
+    .quiz-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--surface-white);
+      border-bottom: 1px solid var(--surface-high);
+      padding: 14px 20px;
+    }
+
+    .quiz-header-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-progress-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #progress-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--on-surface-var);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar-track {
+      width: 100%;
+      height: 10px;
+      background: var(--surface-container);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: var(--primary);
+      border-radius: var(--radius-full);
+      transition: width 0.5s ease-out;
+      width: 0%;
+    }
+
+    .quiz-timer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-fixed);
+      color: var(--primary);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid rgba(0, 97, 148, 0.2);
+    }
+
+    .quiz-timer .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* Quiz Card */
+    .quiz-canvas {
+      padding: 24px 20px 80px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .quiz-card {
+      width: 100%;
+      max-width: 760px;
+      background: var(--surface-white);
+      border: 1px solid var(--outline-var);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .quiz-card-inner {
+      padding: 28px 28px 24px;
+    }
+
+    /* Question meta row */
+    .question-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .module-chip {
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--surface-container);
+      color: var(--on-surface-var);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .difficulty-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .badge-easy {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-medium {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .badge-hard {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Question text */
+    #question-text {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--on-surface);
+      margin-bottom: 24px;
+    }
+
+    /* Options */
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--outline-var);
+      background: var(--surface-white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .option-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-fixed);
+      transform: translateX(3px);
+    }
+
+    .option-btn:hover .option-letter {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .option-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .option-letter {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--outline-var);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--on-surface-var);
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .option-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--on-surface);
+      line-height: 1.4;
+    }
+
+    .option-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    /* Feedback states */
+    .option-correct {
+      border-color: var(--primary) !important;
+      background: var(--primary-fixed) !important;
+    }
+
+    .option-correct .option-text {
+      color: var(--on-primary-fixed);
+      font-weight: 600;
+    }
+
+    .letter-correct {
+      background: var(--primary) !important;
+      border-color: var(--primary) !important;
+      color: #fff !important;
+    }
+
+    .option-wrong {
+      border-color: var(--error) !important;
+      background: var(--error-container) !important;
+    }
+
+    .option-wrong .option-text {
+      color: var(--on-error-container);
+      font-weight: 600;
+    }
+
+    .letter-wrong {
+      background: var(--error) !important;
+      border-color: var(--error) !important;
+      color: #fff !important;
+    }
+
+    .option-dimmed {
+      opacity: 0.45;
+      cursor: default !important;
+    }
+
+    .option-dimmed:hover {
+      transform: none !important;
+      border-color: var(--outline-var) !important;
+      background: var(--surface-white) !important;
+    }
+
+    /* Explanation */
+    .explanation-section {
+      border-top: 1px solid var(--surface-high);
+      padding-top: 16px;
+    }
+
+    .explanation-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .explanation-toggle:hover {
+      background: var(--surface-low);
+    }
+
+    .explanation-toggle-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .explanation-toggle-left .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    #explanation-chevron {
+      font-size: 22px;
+      color: var(--on-surface-var);
+      transition: transform 0.3s;
+    }
+
+    .explanation-content {
+      margin-top: 10px;
+      padding: 16px;
+      background: var(--surface-low);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--outline-var);
+    }
+
+    #explanation-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--on-surface-var);
+    }
+
+    /* Next Button */
+    .quiz-footer {
+      padding: 16px 28px 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    #next-btn {
+      padding: 13px 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    #next-btn:hover {
+      background: var(--primary-container);
+      box-shadow: var(--shadow-primary);
+    }
+
+    #next-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       RESULTS VIEW
+    ============================================================ */
+    .results-canvas {
+      min-height: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .results-bg-blob-1 {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 40%;
+      height: 40%;
+      background: var(--primary-fixed-dim);
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .results-bg-blob-2 {
+      position: absolute;
+      bottom: -10%;
+      right: -10%;
+      width: 40%;
+      height: 40%;
+      background: var(--tertiary-fixed-dim);
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    #confetti-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      opacity: 0.7;
+      animation: confetti-fall linear infinite;
+    }
+
+    .confetti-circle {
+      border-radius: 50%;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .results-card {
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Results Header */
+    .results-header {
+      background: var(--surface-white);
+      border: 1px solid var(--outline-var);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      text-align: center;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .results-trophy {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-full);
+      background: var(--tertiary-fixed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+
+    .results-trophy::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--tertiary-fixed);
+      border-radius: 50%;
+      filter: blur(12px);
+      opacity: 0.6;
+    }
+
+    .results-trophy .material-symbols-outlined {
+      font-size: 36px;
+      color: var(--tertiary);
+      position: relative;
+      z-index: 1;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .results-header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--on-surface);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .results-header p {
+      font-size: 16px;
+      color: var(--on-surface-var);
+      line-height: 1.5;
+    }
+
+    /* Donut Chart */
+    .donut-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s 0.15s ease forwards;
+      opacity: 0;
+    }
+
+    .donut-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .donut-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+      filter: drop-shadow(0 4px 12px rgba(0, 97, 148, 0.2));
+    }
+
+    .donut-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #result-pct-text {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .donut-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--on-surface-var);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    #donut-fill {
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Stats Grid */
+    .results-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s 0.3s ease forwards;
+      opacity: 0;
+    }
+
+    .stat-card {
+      background: var(--surface-white);
+      border: 1px solid var(--outline-var);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-primary);
+    }
+
+    .stat-card:last-child {
+      border-color: var(--tertiary-fixed);
+      background: linear-gradient(135deg, var(--surface-white), rgba(255, 220, 192, 0.15));
+    }
+
+    .stat-card .material-symbols-outlined {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--on-surface);
+    }
+
+    .stat-card .stat-label {
+      font-size: 12px;
+      color: var(--on-surface-var);
+    }
+
+    /* Action Buttons */
+    .results-actions {
+      display: flex;
+      gap: 12px;
+      animation: fadeInUp 0.6s 0.45s ease forwards;
+      opacity: 0;
+    }
+
+    .results-actions button {
+      flex: 1;
+      height: 52px;
+      border-radius: var(--radius-lg);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .results-actions button:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       BOTTOM NAV (Mobile)
+    ============================================================ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: var(--surface-white);
+      border-top: 1px solid var(--surface-high);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 8px 14px;
+      display: none;
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--on-surface-var);
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+      background: none;
+    }
+
+    .bottom-nav-item.nav-active {
+      background: var(--primary-fixed);
+      color: var(--primary);
+    }
+
+    .bottom-nav-item .material-symbols-outlined {
+      font-size: 22px;
+    }
+
+    .bottom-nav-item:active {
+      transform: scale(0.9);
+    }
+
+    /* Exit Confirmation Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: var(--surface-white);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .modal-box h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-box p {
+      font-size: 14px;
+      color: var(--on-surface-var);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+      height: 46px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .modal-actions button:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .top-header {
+        display: flex;
+      }
+
+      .bottom-nav {
+        display: flex;
+      }
+
+      .dashboard-content {
+        padding: 20px 16px 90px;
+      }
+
+      .welcome-banner {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .welcome-stats {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .welcome-stat {
+        flex: 1;
+      }
+
+      .modules-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .module-card-all {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .quiz-canvas {
+        padding: 16px 12px 80px;
+      }
+
+      .quiz-card-inner {
+        padding: 20px 16px 16px;
+      }
+
+      #question-text {
+        font-size: 16px;
+      }
+
+      .quiz-footer {
+        padding: 12px 16px 20px;
+      }
+
+      .results-canvas {
+        padding: 24px 16px 90px;
+      }
+
+      .results-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .results-header h1 {
+        font-size: 20px;
+      }
+
+      .results-actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .top-header {
+        display: none;
+      }
+
+      .bottom-nav {
+        display: none !important;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--outline-var);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--outline);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+     EXIT MODAL
+============================================================ -->
+  <div class="modal-overlay hidden" id="exit-modal">
+    <div class="modal-box">
+      <div style="font-size:40px;margin-bottom:12px;">⚠️</div>
+      <h3>Keluar dari Kuis?</h3>
+      <p>Progres kuis saat ini akan hilang dan tidak tersimpan. Yakin ingin keluar?</p>
+      <div class="modal-actions">
+        <button id="cancel-exit-btn"
+          style="border: 2px solid var(--outline-var); color: var(--on-surface-var); background: none;">
+          Lanjutkan
+        </button>
+        <button id="confirm-exit-btn" style="background: var(--error); color: #fff;">
+          Keluar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+     APP LAYOUT
+============================================================ -->
+  <div class="app-layout">
+
+    <!-- SIDEBAR (Desktop) -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">Use<span>Me</span></div>
+
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">O</div>
+        <div class="sidebar-user-info">
+          <p>AnonyMous</p>
+          <p>Siap ngebantai UAS?</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item nav-active nav-item" data-nav="dashboard">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">dashboard</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-nav="quiz">
+          <span class="material-symbols-outlined">quiz</span>
+          <span>Mulai Kuis</span>
+        </button>
+        <button class="nav-item" data-nav="progress">
+          <span class="material-symbols-outlined">trending_up</span>
+          <span>Progress</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div
+          style="background: var(--surface-high); border-radius: var(--radius-lg); padding: 14px; text-align: center;">
+          <div
+            style="font-size:11px; color: var(--on-surface-var); margin-bottom:6px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">
+            Total XP</div>
+          <div style="font-size:28px; font-weight:800; color: var(--tertiary);" id="stat-xp-sidebar">0</div>
+          <div style="font-size:11px; color: var(--on-surface-var); margin-top:2px;">poin terkumpul</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+
+      <!-- TOP HEADER (Mobile) -->
+      <header class="top-header">
+        <div class="header-logo">Study<span>Spark</span></div>
+        <div class="header-actions">
+          <button class="icon-btn" id="mobile-menu-btn" aria-label="Menu">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- ========================================================
+         VIEW: DASHBOARD
+    ========================================================= -->
+      <div class="view" id="dashboard-view">
+        <div class="dashboard-content">
+
+          <!-- Welcome Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h2>Selamat Datang di UseMe! 🚀</h2>
+              <p>Platform kuis interaktif materi Sistem Operasi Linux. Pilih modul di bawah dan mulai berlatih sekarang!
+              </p>
+            </div>
+            <div class="welcome-stats">
+              <div class="welcome-stat">
+                <div class="stat-val" id="stat-completed">0</div>
+                <div class="stat-lbl">Selesai</div>
+              </div>
+              <div class="welcome-stat">
+                <div class="stat-val" id="stat-correct">0</div>
+                <div class="stat-lbl">Benar</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module Cards -->
+          <p class="section-title">📚 Pilih Modul Kuis</p>
+          <div class="modules-grid">
+
+            <!-- Memory -->
+            <div class="module-card" data-module="memory">
+              <div class="card-icon-wrap icon-primary">
+                <span class="material-symbols-outlined">memory</span>
+              </div>
+              <div class="card-body">
+                <div class="card-title">Manajemen Memori</div>
+                <div class="card-subtitle">RAM, Paging, Virtual Memory, Swapping & Fragmentasi</div>
+                <div class="card-meta">
+                  <span class="material-symbols-outlined">quiz</span>
+                  <span>40 soal</span>
+                  <span>·</span>
+                  <span>Mudah → Sulit</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-bar-fill" id="progress-memory"></div>
+                </div>
+                <div class="progress-row">
+                  <span>Progress</span>
+                  <span id="pct-memory">0%</span>
+                </div>
+                <span class="best-score-badge hidden" id="badge-memory">
+                  <span class="material-symbols-outlined" style="font-size:12px">star</span>
+                  <span></span>
+                </span>
+              </div>
+              <button class="start-quiz-btn btn-primary" data-module="memory">
+                <span class="material-symbols-outlined" style="font-size:18px">play_arrow</span>
+                Mulai Latihan
+              </button>
+            </div>
+
+            <!-- Storage -->
+            <div class="module-card" data-module="storage">
+              <div class="card-icon-wrap icon-tertiary">
+                <span class="material-symbols-outlined">storage</span>
+              </div>
+              <div class="card-body">
+                <div class="card-title">Mass Storage</div>
+                <div class="card-subtitle">HDD/SSD, Partisi, Disk Scheduling, RAID & LVM</div>
+                <div class="card-meta">
+                  <span class="material-symbols-outlined">quiz</span>
+                  <span>40 soal</span>
+                  <span>·</span>
+                  <span>Mudah → Sulit</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-bar-fill" style="background: var(--tertiary);" id="progress-storage"></div>
+                </div>
+                <div class="progress-row">
+                  <span>Progress</span>
+                  <span id="pct-storage">0%</span>
+                </div>
+                <span class="best-score-badge hidden" id="badge-storage"
+                  style="background: var(--tertiary-fixed); color: var(--tertiary);">
+                  <span class="material-symbols-outlined" style="font-size:12px">star</span>
+                  <span></span>
+                </span>
+              </div>
+              <button class="start-quiz-btn btn-outline" data-module="storage"
+                style="border-color: var(--tertiary); color: var(--tertiary);">
+                <span class="material-symbols-outlined" style="font-size:18px">play_arrow</span>
+                Mulai Latihan
+              </button>
+            </div>
+
+            <!-- User Management -->
+            <div class="module-card" data-module="user">
+              <div class="card-icon-wrap icon-secondary">
+                <span class="material-symbols-outlined">manage_accounts</span>
+              </div>
+              <div class="card-body">
+                <div class="card-title">User Management</div>
+                <div class="card-subtitle">User, Group, Permission, chmod/chown & Administrasi</div>
+                <div class="card-meta">
+                  <span class="material-symbols-outlined">quiz</span>
+                  <span>40 soal</span>
+                  <span>·</span>
+                  <span>Mudah → Sulit</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-bar-fill" style="background: var(--secondary);" id="progress-user"></div>
+                </div>
+                <div class="progress-row">
+                  <span>Progress</span>
+                  <span id="pct-user">0%</span>
+                </div>
+                <span class="best-score-badge hidden" id="badge-user"
+                  style="background: var(--secondary-fixed); color: var(--secondary);">
+                  <span class="material-symbols-outlined" style="font-size:12px">star</span>
+                  <span></span>
+                </span>
+              </div>
+              <button class="start-quiz-btn btn-outline" data-module="user"
+                style="border-color: var(--secondary); color: var(--secondary);">
+                <span class="material-symbols-outlined" style="font-size:18px">play_arrow</span>
+                Mulai Latihan
+              </button>
+            </div>
+
+            <!-- All Topics Card -->
+            <div class="module-card module-card-all" data-module="all">
+              <div class="card-icon-wrap icon-combo" style="width:64px;height:64px;">
+                <span class="material-symbols-outlined" style="font-size:32px;">auto_stories</span>
+              </div>
+              <div class="card-body">
+                <div class="card-title" style="font-size:18px;">🌟 Semua Topik — Tantangan Lengkap</div>
+                <div class="card-subtitle">Gabungan 120 soal dari Manajemen Memori + Mass Storage + User Management,
+                  diurutkan dari mudah ke sulit. Uji kemampuan total kamu!</div>
+                <div class="card-meta" style="margin-top:8px;">
+                  <span class="material-symbols-outlined">quiz</span>
+                  <span>120 soal total</span>
+                  <span>·</span>
+                  <span>3 topik digabungkan</span>
+                  <span>·</span>
+                  <span class="best-score-badge hidden" id="badge-all">
+                    <span class="material-symbols-outlined" style="font-size:12px">star</span>
+                    <span></span>
+                  </span>
+                </div>
+              </div>
+              <button class="start-quiz-btn btn-primary" data-module="all"
+                style="white-space:nowrap; height:48px; padding: 0 24px;">
+                <span class="material-symbols-outlined" style="font-size:20px">rocket_launch</span>
+                Mulai Semua Topik
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Tip -->
+          <div
+            style="background: var(--primary-fixed); border-radius: var(--radius-lg); padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start; margin-top: 8px;">
+            <span class="material-symbols-outlined"
+              style="color: var(--primary); font-size: 22px; flex-shrink:0; margin-top:1px;">lightbulb</span>
+            <div>
+              <div style="font-size:14px; font-weight:700; color: var(--primary); margin-bottom:4px;">Cara Menggunakan
+              </div>
+              <div style="font-size:13px; color: var(--on-surface-var); line-height:1.5;">Pilih satu opsi jawaban untuk
+                mendapatkan feedback langsung. Pembahasan akan terbuka otomatis setelah kamu memilih. Klik "Soal
+                Selanjutnya" untuk melanjutkan. Skor kamu tersimpan otomatis di browser!</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- END DASHBOARD VIEW -->
+
+      <!-- ========================================================
+         VIEW: QUIZ
+    ========================================================= -->
+      <div class="view hidden" id="quiz-view" style="display:flex; flex-direction:column; height:100%;">
+
+        <!-- Quiz Header -->
+        <header class="quiz-header">
+          <div class="quiz-header-inner">
+            <button class="icon-btn" id="exit-quiz-btn" aria-label="Keluar kuis">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="quiz-progress-wrap">
+              <span id="progress-text">Soal 1 dari 40</span>
+              <div class="progress-bar-track">
+                <div id="progress-bar"></div>
+              </div>
+            </div>
+            <div class="quiz-timer">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">timer</span>
+              <span id="timer-display">00:00</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Quiz Canvas -->
+        <div class="quiz-canvas" style="flex:1; overflow-y:auto;">
+          <div style="width:100%;max-width:760px;">
+
+            <!-- Module Label -->
+            <div style="text-align:center; margin-bottom: 14px;">
+              <span id="quiz-module-label"
+                style="font-size:13px; font-weight:700; color: var(--on-surface-var); text-transform: uppercase; letter-spacing:0.05em;"></span>
+            </div>
+
+            <!-- Quiz Card -->
+            <div class="quiz-card" id="quiz-card">
+              <div class="quiz-card-inner">
+
+                <!-- Question Meta -->
+                <div class="question-meta">
+                  <span class="module-chip" id="question-module-chip">Modul</span>
+                  <span class="difficulty-badge" id="question-difficulty">Mudah</span>
+                </div>
+
+                <!-- Question Text -->
+                <p id="question-text">Memuat soal...</p>
+
+                <!-- Options -->
+                <div class="options-container" id="options-container"></div>
+
+                <!-- Explanation -->
+                <div class="explanation-section">
+                  <button class="explanation-toggle" id="explanation-toggle">
+                    <div class="explanation-toggle-left">
+                      <span class="material-symbols-outlined">lightbulb</span>
+                      <span>Lihat Pembahasan</span>
+                    </div>
+                    <span class="material-symbols-outlined" id="explanation-chevron">expand_more</span>
+                  </button>
+                  <div class="explanation-content hidden" id="explanation-content">
+                    <p id="explanation-text"></p>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Next Button -->
+              <div class="quiz-footer">
+                <button id="next-btn" class="hidden">
+                  Soal Selanjutnya
+                  <span class="material-symbols-outlined" style="font-size:20px">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- END QUIZ VIEW -->
+
+      <!-- ========================================================
+         VIEW: RESULTS
+    ========================================================= -->
+      <div class="view hidden" id="results-view">
+        <div class="results-canvas">
+          <!-- Background blobs -->
+          <div class="results-bg-blob-1"></div>
+          <div class="results-bg-blob-2"></div>
+
+          <!-- Confetti -->
+          <div id="confetti-container"></div>
+
+          <!-- Results Content -->
+          <div class="results-card">
+
+            <!-- Header -->
+            <div class="results-header">
+              <div class="results-trophy">
+                <span class="material-symbols-outlined">emoji_events</span>
+              </div>
+              <h1 id="results-title">Selamat!</h1>
+              <p id="results-subtitle">Kamu berhasil menyelesaikan kuis.</p>
+            </div>
+
+            <!-- Donut Chart -->
+            <div class="donut-wrap">
+              <div class="donut-container">
+                <svg class="donut-svg" viewBox="0 0 100 100">
+                  <!-- Track -->
+                  <circle cx="50" cy="50" r="40" fill="transparent" stroke="#e5e8ee" stroke-width="12" />
+                  <!-- Fill -->
+                  <circle id="donut-fill" cx="50" cy="50" r="40" fill="transparent" stroke="#006194" stroke-width="12"
+                    stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round" />
+                </svg>
+                <div class="donut-inner">
+                  <div id="result-pct-text">0%</div>
+                  <div class="donut-label">Success Rate</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="results-stats-grid">
+              <div class="stat-card">
+                <span class="material-symbols-outlined"
+                  style="color: var(--primary); font-variation-settings:'FILL' 1">check_circle</span>
+                <div class="stat-value" id="result-correct">0</div>
+                <div class="stat-label">Benar</div>
+              </div>
+              <div class="stat-card">
+                <span class="material-symbols-outlined"
+                  style="color: var(--error); font-variation-settings:'FILL' 1">cancel</span>
+                <div class="stat-value" id="result-wrong">0</div>
+                <div class="stat-label">Salah</div>
+              </div>
+              <div class="stat-card">
+                <span class="material-symbols-outlined" style="color: var(--secondary)">timer</span>
+                <div class="stat-value" id="result-time">0m 0s</div>
+                <div class="stat-label">Waktu</div>
+              </div>
+              <div class="stat-card">
+                <span class="material-symbols-outlined"
+                  style="color: var(--tertiary); font-variation-settings:'FILL' 1">bolt</span>
+                <div class="stat-value" style="color: var(--tertiary);" id="result-xp">+0</div>
+                <div class="stat-label" style="color: var(--tertiary)">XP Diperoleh</div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="results-actions">
+              <button id="retry-btn" class="btn-outline"
+                style="border: 2px solid var(--primary); color: var(--primary);">
+                <span class="material-symbols-outlined">refresh</span>
+                Coba Lagi
+              </button>
+              <button id="dashboard-btn" class="btn-primary" style="background: var(--primary); color: #fff;">
+                <span class="material-symbols-outlined">dashboard</span>
+                Kembali ke Dashboard
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- END RESULTS VIEW -->
+
+    </div>
+    <!-- END MAIN AREA -->
+
+  </div>
+  <!-- END APP LAYOUT -->
+
+  <!-- BOTTOM NAV (Mobile) -->
+  <nav class="bottom-nav">
+    <button class="bottom-nav-item nav-active" data-nav="dashboard">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">home</span>
+      <span>Home</span>
+    </button>
+    <button class="bottom-nav-item" data-nav="quiz">
+      <span class="material-symbols-outlined">quiz</span>
+      <span>Kuis</span>
+    </button>
+    <button class="bottom-nav-item" data-nav="progress">
+      <span class="material-symbols-outlined">insights</span>
+      <span>Progress</span>
+    </button>
+  </nav>
+
+  <!-- ============================================================
+     SCRIPTS
+============================================================ -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    // Sync sidebar XP display
+    function syncSidebarXP() {
+      const progress = getProgress ? getProgress() : {};
+      const totalXP = Object.values(progress).reduce((s, p) => s + (p.xp || 0), 0);
+      const el = document.getElementById('stat-xp-sidebar');
+      if (el) el.textContent = totalXP;
+    }
+
+    // Patch renderDashboard to also update progress bars by ID
+    const _originalRenderDashboard = renderDashboard;
+    window.renderDashboard = function () {
+      _originalRenderDashboard();
+      const progress = getProgress();
+
+      // memory
+      const mPct = progress.memory ? Math.round((progress.memory.bestScore / 40) * 100) : 0;
+      const mBar = document.getElementById('progress-memory');
+      const mPctEl = document.getElementById('pct-memory');
+      const mBadge = document.getElementById('badge-memory');
+      if (mBar) mBar.style.width = `${mPct}%`;
+      if (mPctEl) mPctEl.textContent = `${mPct}%`;
+      if (mBadge && progress.memory) {
+        mBadge.classList.remove('hidden');
+        mBadge.querySelector('span:last-child').textContent = `${progress.memory.bestScore}/40`;
+      }
+
+      // storage
+      const sPct = progress.storage ? Math.round((progress.storage.bestScore / 40) * 100) : 0;
+      const sBar = document.getElementById('progress-storage');
+      const sPctEl = document.getElementById('pct-storage');
+      const sBadge = document.getElementById('badge-storage');
+      if (sBar) sBar.style.width = `${sPct}%`;
+      if (sPctEl) sPctEl.textContent = `${sPct}%`;
+      if (sBadge && progress.storage) {
+        sBadge.classList.remove('hidden');
+        sBadge.querySelector('span:last-child').textContent = `${progress.storage.bestScore}/40`;
+      }
+
+      // user
+      const uPct = progress.user ? Math.round((progress.user.bestScore / 40) * 100) : 0;
+      const uBar = document.getElementById('progress-user');
+      const uPctEl = document.getElementById('pct-user');
+      const uBadge = document.getElementById('badge-user');
+      if (uBar) uBar.style.width = `${uPct}%`;
+      if (uPctEl) uPctEl.textContent = `${uPct}%`;
+      if (uBadge && progress.user) {
+        uBadge.classList.remove('hidden');
+        uBadge.querySelector('span:last-child').textContent = `${progress.user.bestScore}/40`;
+      }
+
+      // all
+      const aBadge = document.getElementById('badge-all');
+      if (aBadge && progress.all) {
+        aBadge.classList.remove('hidden');
+        aBadge.querySelector('span:last-child').textContent = `${progress.all.bestScore}/120`;
+      }
+
+      syncSidebarXP();
+    };
+
+    // Bottom nav items also trigger dashboard
+    document.querySelectorAll('.bottom-nav-item').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('nav-active'));
+        el.classList.add('nav-active');
+        const nav = el.dataset.nav;
+        if (nav === 'dashboard') goToDashboard();
+      });
+    });
+  </script>
+
+</body>
+
+</html>

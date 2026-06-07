@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quiz - StudySpark</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d7dae0",
+                        "surface-container": "#ebeef4",
+                        "on-tertiary-fixed-variant": "#6b3b00",
+                        "tertiary": "#894d00",
+                        "background": "#f7f9ff",
+                        "surface-variant": "#dfe3e8",
+                        "on-primary-fixed": "#001d31",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#e0e3e5",
+                        "secondary": "#5c5f61",
+                        "secondary-fixed": "#e0e3e5",
+                        "on-secondary-fixed": "#191c1e",
+                        "secondary-fixed-dim": "#c4c7c9",
+                        "primary-container": "#007bb9",
+                        "on-surface": "#181c20",
+                        "inverse-surface": "#2d3135",
+                        "surface": "#f7f9ff",
+                        "surface-tint": "#006398",
+                        "on-tertiary-fixed": "#2d1600",
+                        "outline": "#707881",
+                        "primary-fixed": "#cce5ff",
+                        "outline-variant": "#bfc7d2",
+                        "on-secondary-container": "#626567",
+                        "on-secondary-fixed-variant": "#444749",
+                        "on-surface-variant": "#3f4850",
+                        "primary": "#006194",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eef1f7",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdcc0",
+                        "tertiary-fixed-dim": "#ffb875",
+                        "on-primary-container": "#fdfcff",
+                        "surface-container-highest": "#dfe3e8",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004b73",
+                        "primary-fixed-dim": "#93ccff",
+                        "on-background": "#181c20",
+                        "tertiary-container": "#ac6200",
+                        "surface-container-high": "#e5e8ee",
+                        "inverse-primary": "#93ccff",
+                        "surface-container-low": "#f1f4fa",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f7f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#fffbff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "section-gap": "48px",
+                        "container-padding-desktop": "40px",
+                        "container-padding-mobile": "16px",
+                        "unit": "4px",
+                        "stack-lg": "24px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "title-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Quiz Top Bar (Transactional/Focused intent - Global Nav Suppressed) -->
+<header class="w-full top-0 sticky z-50 bg-surface-container-lowest shadow-sm">
+<div class="flex justify-between items-center px-container-padding-mobile md:px-container-padding-desktop py-stack-md max-w-[1200px] mx-auto">
+<!-- Back Action -->
+<button aria-label="Keluar kuis" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<!-- Progress Indicator -->
+<div class="flex flex-col items-center flex-1 px-4 max-w-md">
+<span class="font-label-md text-label-md text-on-surface-variant mb-2">Soal 3 dari 10</span>
+<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="w-full h-3 bg-surface-container rounded-full overflow-hidden" role="progressbar">
+<div class="h-full bg-primary rounded-full transition-all duration-500 ease-out" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Timer -->
+<div class="flex items-center space-x-2 text-primary bg-primary-fixed/20 px-3 py-1.5 rounded-full border border-primary-fixed">
+<span class="material-symbols-outlined icon-fill text-[20px]" data-icon="timer">timer</span>
+<span class="font-label-md text-label-md tabular-nums">12:45</span>
+</div>
+</div>
+</header>
+<!-- Main Quiz Canvas -->
+<main class="flex-1 flex justify-center py-stack-lg md:py-section-gap px-container-padding-mobile md:px-container-padding-desktop">
+<div class="w-full max-w-[720px]">
+<!-- Quiz Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant p-stack-lg md:p-8 space-y-stack-lg">
+<!-- Question -->
+<div class="space-y-stack-md">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption uppercase tracking-wider">
+                        Geometri
+                    </div>
+<h1 class="font-title-md text-title-md md:font-headline-lg-mobile md:text-headline-lg-mobile text-on-surface">
+                        Sebuah jajar genjang dengan panjang alas 24 cm memiliki luas 192 cm². Tinggi jajar genjang tersebut adalah...
+                    </h1>
+</div>
+<!-- Options List (Simulating post-answer feedback state) -->
+<div class="flex flex-col space-y-stack-sm">
+<!-- Option A: Default State -->
+<button class="w-full text-left p-stack-md rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-center justify-between group">
+<div class="flex items-center space-x-4">
+<div class="w-8 h-8 rounded-full border-2 border-outline-variant flex items-center justify-center font-label-md text-label-md text-on-surface-variant group-hover:border-primary group-hover:text-primary transition-colors">A</div>
+<span class="font-body-md text-body-md text-on-surface">6 cm</span>
+</div>
+</button>
+<!-- Option B: Correct Answer State (Using primary-fixed as a theme-compliant "positive/correct" highlight) -->
+<button class="w-full text-left p-stack-md rounded-lg border-2 border-primary bg-primary-fixed transition-all flex items-center justify-between relative overflow-hidden">
+<div class="absolute inset-0 bg-primary opacity-5"></div>
+<div class="flex items-center space-x-4 relative z-10">
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-primary flex items-center justify-center text-on-primary font-label-md text-label-md">B</div>
+<span class="font-body-lg text-body-lg text-on-primary-fixed font-medium">8 cm</span>
+</div>
+<span class="material-symbols-outlined icon-fill text-primary relative z-10" data-icon="check_circle">check_circle</span>
+</button>
+<!-- Option C: Default State -->
+<button class="w-full text-left p-stack-md rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-center justify-between group opacity-60">
+<div class="flex items-center space-x-4">
+<div class="w-8 h-8 rounded-full border-2 border-outline-variant flex items-center justify-center font-label-md text-label-md text-on-surface-variant">C</div>
+<span class="font-body-md text-body-md text-on-surface">10 cm</span>
+</div>
+</button>
+<!-- Option D: Incorrect User Selection State -->
+<button class="w-full text-left p-stack-md rounded-lg border-2 border-error bg-error-container transition-all flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<div class="w-8 h-8 rounded-full border-2 border-error bg-error flex items-center justify-center text-on-error font-label-md text-label-md">D</div>
+<span class="font-body-lg text-body-lg text-on-error-container font-medium">12 cm</span>
+</div>
+<span class="material-symbols-outlined icon-fill text-error" data-icon="cancel">cancel</span>
+</button>
+</div>
+<!-- Explanation Accordion -->
+<div class="pt-stack-md border-t border-surface-variant">
+<button class="w-full flex items-center justify-between p-stack-sm rounded-lg hover:bg-surface-container-low transition-colors group" id="explanation-toggle">
+<div class="flex items-center space-x-2 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="lightbulb">lightbulb</span>
+<span class="font-label-md text-label-md">Lihat Pembahasan</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-transform duration-300" data-icon="expand_more" id="explanation-chevron">expand_more</span>
+</button>
+<div class="hidden mt-stack-sm p-stack-md bg-surface-container-low rounded-lg border border-outline-variant/30" id="explanation-content">
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                            Rumus luas jajar genjang adalah:
+                        </p>
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-surface-variant font-label-md text-label-md text-center mb-4 text-on-surface">
+                            Luas = alas × tinggi
+                        </div>
+<ul class="space-y-2 font-body-md text-body-md text-on-surface-variant">
+<li class="flex items-start"><span class="mr-2 text-primary">•</span> Diketahui Luas = 192 cm² dan alas = 24 cm.</li>
+<li class="flex items-start"><span class="mr-2 text-primary">•</span> 192 = 24 × tinggi</li>
+<li class="flex items-start"><span class="mr-2 text-primary">•</span> tinggi = 192 ÷ 24</li>
+<li class="flex items-start"><span class="mr-2 text-primary">•</span> <strong>tinggi = 8 cm</strong></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Next Action -->
+<div class="mt-stack-lg flex justify-end">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-8 py-3 rounded-lg shadow-sm hover:bg-surface-tint hover:shadow-md transition-all active:scale-95 flex items-center space-x-2">
+<span>Soal Selanjutnya</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<script>
+        // Simple Accordion Interaction
+        const toggleBtn = document.getElementById('explanation-toggle');
+        const content = document.getElementById('explanation-content');
+        const chevron = document.getElementById('explanation-chevron');
+
+        // Open by default to show the required state
+        content.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
+
+        toggleBtn.addEventListener('click', () => {
+            content.classList.toggle('hidden');
+            if (content.classList.contains('hidden')) {
+                chevron.style.transform = 'rotate(0deg)';
+            } else {
+                chevron.style.transform = 'rotate(180deg)';
+            }
+        });
+    </script>
+</body></html>

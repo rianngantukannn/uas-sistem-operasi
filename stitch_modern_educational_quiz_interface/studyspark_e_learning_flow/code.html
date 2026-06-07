@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "surface-dim": "#d7dae0",
+                            "surface-container": "#ebeef4",
+                            "on-tertiary-fixed-variant": "#6b3b00",
+                            "tertiary": "#894d00",
+                            "background": "#f7f9ff",
+                            "surface-variant": "#dfe3e8",
+                            "on-primary-fixed": "#001d31",
+                            "on-tertiary": "#ffffff",
+                            "on-secondary": "#ffffff",
+                            "secondary-container": "#e0e3e5",
+                            "secondary": "#5c5f61",
+                            "secondary-fixed": "#e0e3e5",
+                            "on-secondary-fixed": "#191c1e",
+                            "secondary-fixed-dim": "#c4c7c9",
+                            "primary-container": "#007bb9",
+                            "on-surface": "#181c20",
+                            "inverse-surface": "#2d3135",
+                            "surface": "#f7f9ff",
+                            "surface-tint": "#006398",
+                            "on-tertiary-fixed": "#2d1600",
+                            "outline": "#707881",
+                            "primary-fixed": "#cce5ff",
+                            "outline-variant": "#bfc7d2",
+                            "on-secondary-container": "#626567",
+                            "on-secondary-fixed-variant": "#444749",
+                            "on-surface-variant": "#3f4850",
+                            "primary": "#006194",
+                            "error": "#ba1a1a",
+                            "inverse-on-surface": "#eef1f7",
+                            "on-primary": "#ffffff",
+                            "tertiary-fixed": "#ffdcc0",
+                            "tertiary-fixed-dim": "#ffb875",
+                            "on-primary-container": "#fdfcff",
+                            "surface-container-highest": "#dfe3e8",
+                            "on-error-container": "#93000a",
+                            "error-container": "#ffdad6",
+                            "on-primary-fixed-variant": "#004b73",
+                            "primary-fixed-dim": "#93ccff",
+                            "on-background": "#181c20",
+                            "tertiary-container": "#ac6200",
+                            "surface-container-high": "#e5e8ee",
+                            "inverse-primary": "#93ccff",
+                            "surface-container-low": "#f1f4fa",
+                            "on-error": "#ffffff",
+                            "surface-bright": "#f7f9ff",
+                            "surface-container-lowest": "#ffffff",
+                            "on-tertiary-container": "#fffbff"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "gutter": "24px",
+                            "stack-sm": "8px",
+                            "section-gap": "48px",
+                            "container-padding-desktop": "40px",
+                            "container-padding-mobile": "16px",
+                            "unit": "4px",
+                            "stack-lg": "24px",
+                            "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                            "headline-lg-mobile": ["Inter"],
+                            "title-md": ["Inter"],
+                            "body-lg": ["Inter"],
+                            "display-lg": ["Inter"],
+                            "headline-lg": ["Inter"],
+                            "body-md": ["Inter"],
+                            "label-md": ["Inter"],
+                            "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                            "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                            "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface h-full flex font-body-md text-on-surface">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col bg-surface-container h-screen w-64 left-0 sticky shadow-md p-stack-lg space-y-stack-sm z-40">
+<div class="mb-8">
+<h1 class="font-headline-lg text-headline-lg text-primary">StudySpark</h1>
+</div>
+<div class="flex items-center space-x-4 mb-10 p-4 bg-surface-container-high rounded-xl">
+<img alt="User avatar" class="w-12 h-12 rounded-full object-cover border-2 border-primary-container" data-alt="A bright, cheerful portrait photo of a young student used as a profile avatar. The lighting is soft and natural, creating a welcoming and studious atmosphere. The background is a subtle, out-of-focus modern library or study space. Colors are warm and inviting, fitting a clean, minimalist UI aesthetic." src="https://lh3.googleusercontent.com/aida/AP1WRLtXZbhuEdbikVlGuAMOST832rKzVbS7DoHUuhtM9wnaM2a8Imo6i9EFeUQO9D9zr8XqA4gELfvS7gh_dDFk4QidoKMM4YH6SkKOB08x1rFHWQunZISbv3COk7MO-HMowYkT_Ee1ybkMxtkrC6f2Nux0-J8zP-C5ujnXxD0N5E-9AJ1I7isT1BPyqVIjXj0QyJljw3e94ThAB12vsgriFK7dEF3dEU4YWMEUbF3yMKCETLoqGRQIFd6UsxTI"/>
+<div>
+<p class="font-title-md text-title-md text-on-surface">Welcome Back</p>
+<p class="font-caption text-caption text-on-surface-variant">Ready to learn?</p>
+</div>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">quiz</span>
+<span class="font-label-md text-label-md">Quizzes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="font-label-md text-label-md">Progress</span>
+</a>
+</li>
+<li>
+<a class="flex items-center space-x-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Community</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-xl hover:bg-surface-tint transition-colors shadow-sm hover:shadow-md flex items-center justify-center space-x-2">
+<span class="material-symbols-outlined">play_arrow</span>
+<span>Start Quiz</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- TopAppBar (Mobile & General Top Nav Content for Desktop) -->
+<header class="w-full top-0 sticky z-30 bg-surface-container-lowest shadow-sm md:shadow-none md:bg-transparent">
+<div class="flex justify-between items-center px-container-padding-mobile md:px-container-padding-desktop py-stack-md max-w-[1200px] mx-auto">
+<div class="md:hidden flex items-center">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<!-- Desktop Search & Actions -->
+<div class="hidden md:flex flex-1 justify-end items-center space-x-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface rounded-full border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body-md text-body-md transition-all" placeholder="Search modules..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<!-- Mobile Actions -->
+<div class="flex md:hidden items-center space-x-2">
+<button class="p-2 text-on-surface-variant active:scale-95 duration-200 transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A bright, cheerful portrait photo of a young student used as a profile avatar. The lighting is soft and natural, creating a welcoming and studious atmosphere." src="https://lh3.googleusercontent.com/aida/AP1WRLtyIFFQ6TfXh-H2lwJaow8Ao03zppw6zZD0B-BKxh0r7mphX2m_WOCvoXZqC9vYHWHsW0EYwzUnx9spc8vkm_qBnKwH5oKOWfo9rGQDaa3GoipjqBulsGgkn8yxwV1w4Te8QfFhc-IAnkVbIDtazlrIjWrlb6fiTdnXDoa4FHLV_T-e5RPvD_-2eL8EjhdQuGH--Sls8yD9KnZ7Xj779lSE_lshlg5DQX4rHQ_ematbA9k6stTEEOECxn1c"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="px-container-padding-mobile md:px-container-padding-desktop py-stack-lg max-w-[1200px] mx-auto w-full pb-32 md:pb-stack-lg">
+<div class="mb-section-gap">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Learning Modules</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Pick up where you left off or start a new topic.</p>
+</div>
+<!-- Bento Grid Layout for Modules -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Module Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_rgba(2,132,199,0.12)] transition-shadow duration-300 flex flex-col group">
+<div class="w-16 h-16 rounded-xl bg-primary-fixed flex items-center justify-center mb-6 text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-4xl">calculate</span>
+</div>
+<div class="flex-1">
+<h3 class="font-title-md text-title-md text-on-surface mb-2">Pecahan &amp; Angka</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">Master the fundamentals of fractions, decimals, and core number theory essential for advanced mathematics.</p>
+</div>
+<div class="mb-6">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant mb-2">
+<span>Progress</span>
+<span>45%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[45%]"></div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md h-12 rounded-xl hover:bg-surface-tint transition-colors flex items-center justify-center space-x-2">
+<span>Mulai Latihan</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Module Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_rgba(2,132,199,0.12)] transition-shadow duration-300 flex flex-col group">
+<div class="w-16 h-16 rounded-xl bg-tertiary-fixed flex items-center justify-center mb-6 text-tertiary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-4xl">category</span>
+</div>
+<div class="flex-1">
+<h3 class="font-title-md text-title-md text-on-surface mb-2">Bangun Datar &amp; Geometri</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">Explore the properties of 2D shapes, angles, and spatial reasoning through interactive exercises.</p>
+</div>
+<div class="mb-6">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant mb-2">
+<span>Progress</span>
+<span>12%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[12%]"></div>
+</div>
+</div>
+<button class="w-full bg-transparent border-2 border-primary text-primary font-label-md text-label-md h-12 rounded-xl hover:bg-primary-fixed transition-colors flex items-center justify-center space-x-2">
+<span>Lanjutkan Latihan</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Module Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_rgba(2,132,199,0.12)] transition-shadow duration-300 flex flex-col group md:col-span-2 lg:col-span-1">
+<div class="w-16 h-16 rounded-xl bg-secondary-fixed flex items-center justify-center mb-6 text-secondary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-4xl">functions</span>
+</div>
+<div class="flex-1">
+<h3 class="font-title-md text-title-md text-on-surface mb-2">Limit Fungsi Aljabar</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">Dive into calculus basics, understanding limits, continuity, and algebraic functions behavior.</p>
+</div>
+<div class="mb-6">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant mb-2">
+<span>Progress</span>
+<span>0%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[0%]"></div>
+</div>
+</div>
+<button class="w-full bg-transparent border-2 border-primary text-primary font-label-md text-label-md h-12 rounded-xl hover:bg-primary-fixed transition-colors flex items-center justify-center space-x-2">
+<span>Mulai Latihan</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 md:hidden bg-surface-container-lowest shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl pb-safe">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-caption text-caption mt-1">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-caption text-caption mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-caption text-caption mt-1">Profile</span>
+</a>
+</nav>
+<style>
+        /* Polyfill for safe area env variables on iOS */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .pb-safe {
+                padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</body></html>
