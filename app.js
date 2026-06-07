@@ -276,6 +276,11 @@ function selectOption(selectedIdx) {
     state.currentIndex === state.questions.length - 1
       ? '🏁 Selesai & Lihat Hasil'
       : 'Soal Selanjutnya →';
+
+  // Scroll otomatis agar tombol "Soal Selanjutnya" langsung terlihat di layar
+  setTimeout(() => {
+    nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 150);
 }
 
 function nextQuestion() {
